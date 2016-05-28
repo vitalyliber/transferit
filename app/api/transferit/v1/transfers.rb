@@ -41,8 +41,9 @@ module Transferit
 
         post do
           transfers = Transfer.where(from: params[:from],
-                                     to: params[:to],
-                                     date: params[:date])
+                                     to: params[:to])
+
+          transfers = transfers.where(date: params[:date]) if params[:date].present?
 
           present transfers, with: Transferit::V1::Entities::Transfers, root: 'transfers'
         end
