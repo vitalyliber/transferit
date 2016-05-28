@@ -5,4 +5,12 @@ class User < ActiveRecord::Base
          :recoverable, :rememberable, :trackable, :validatable
 
   validates :phone, presence: :true
+
+  def email_required?
+    false
+  end
+
+  def email_changed?
+    false
+  end
 end
