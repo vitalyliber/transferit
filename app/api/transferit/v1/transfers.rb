@@ -2,28 +2,22 @@ module Transferit
   module V1
     module Entities
       class Parcels < Grape::Entity
-        expose :parcel do
-          expose :description
-          expose :from_id
-          expose :to_id
-          expose :date
-          expose :user_id
-        end
+        expose :description
+        expose :from_id
+        expose :to_id
+        expose :date
+        expose :user_id
       end
 
       class Transfers < Grape::Entity
-
-        expose :transfer do
-          expose :description
-          expose :from_id
-          expose :to_id
-          expose :date
-          expose :time do |model|
-            model.time.try(:strftime, '%H:%M')
-          end
-          expose :user_id
+        expose :description
+        expose :from_id
+        expose :to_id
+        expose :date
+        expose :time do |model|
+          model.time.try(:strftime, '%H:%M')
         end
-
+        expose :user_id
       end
     end
 
@@ -36,33 +30,32 @@ module Transferit
         params do
           requires :from, type: Integer, default: 1, desc: 'City id'
           requires :to, type: Integer, default: 2, desc: 'City id'
-          optional :date, type: String, default: Time.now.to_date, desc: 'Transfers date'
+          optional :date, type: String, default: '', desc: 'Transfers date (example: 2016-05-29)'
         end
 
-        post do
+        get do
           transfers = Transfer.where(from: params[:from],
                                      to: params[:to])
 
           transfers = transfers.where(date: params[:date]) if params[:date].present?
 
-          present transfers, with: Transferit::V1::Entities::Transfers, root: 'transfers'
+          present transfers, with: Transferit::V1::Entities::Transfers
         end
 
         desc 'Get Parcels'
         params do
           requires :from, type: Integer, default: 1, desc: 'City id'
           requires :to, type: Integer, default: 2, desc: 'City id'
-          optional :date, type: String, default: Time.now.to_date, desc: 'Transfers date'
+          optional :date, type: String, default: '', desc: 'Transfers date (example: 2016-05-29)'
         end
 
-        post 'parcels' do
+        get 'parcels' do
           parcels = Parcel.where(from: params[:from],
-                                     to: params[:to],
-                                     date: params[:date])
+                                     to: params[:to])
 
           parcels = parcels.where(date: params[:date]) if params[:date].present?
 
-          present parcels, with: Transferit::V1::Entities::Parcels, root: 'parcels'
+          present parcels, with: Transferit::V1::Entities::Parcels
         end
 
         desc 'Create Parcel'
@@ -119,7 +112,7 @@ module Transferit
         params do
           requires :parcel_id, type: Integer, default: 1, desc: 'Parcel id'
         end
-        post 'find_parcel' do
+        get 'find_parcel' do
           parcel = Parcel.find_by(id: params[:parcel_id])
 
           present parcel, with: Transferit::V1::Entities::Parcels
@@ -129,7 +122,7 @@ module Transferit
         params do
           requires :transfer_id, type: Integer, default: 1, desc: 'Transfer id'
         end
-        post 'find_transfer' do
+        get 'find_transfer' do
           transfer = Transfer.find_by(id: params[:transfer_id])
 
           present transfer, with: Transferit::V1::Entities::Transfers
