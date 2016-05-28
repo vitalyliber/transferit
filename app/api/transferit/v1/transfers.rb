@@ -77,7 +77,7 @@ module Transferit
           parcel = Parcel.new(
                      from: City.find(params[:from]),
                      to: City.find(params[:to]),
-                     user: User.find(params[:user]),
+                     user: MobileUser.find(params[:user]),
                      description: params[:description],
                      date: params[:date]
           )
@@ -102,7 +102,7 @@ module Transferit
           transfer = Transfer.new(
               from: City.find(params[:from]),
               to: City.find(params[:to]),
-              user: User.find(params[:user]),
+              user: MobileUser.find(params[:user]),
               description: params[:description],
               date: params[:date],
               time: params[:time]
