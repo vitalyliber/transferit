@@ -30,8 +30,8 @@ module Transferit
 
         desc 'Get Transfers'
         params do
-          requires :from, type: Integer, default: 1, desc: 'Transfers from'
-          requires :to, type: Integer, default: 2, desc: 'Transfers to'
+          requires :from, type: Integer, default: 1, desc: 'City id'
+          requires :to, type: Integer, default: 2, desc: 'City id'
           optional :date, type: String, default: Time.now.to_date, desc: 'Transfers date'
           optional :type, type: Symbol, default: :post, values: [:post, :necessary], desc: 'Transfers type'
         end
