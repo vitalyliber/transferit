@@ -17,6 +17,7 @@ module Transferit
 
       mount Transferit::V1::Transfers
       mount Transferit::V1::Users
+      mount Transferit::V1::Comments
 
       add_swagger_documentation api_version: "v1", mount_path: "/"
     end
