@@ -16,3 +16,10 @@
 !/log/.keep
 /tmp
 /.idea
+.idea/.generators
+.idea/.rakeTasks
+.idea/encodings.xml
+.idea/misc.xml
+.idea/modules.xml
+.idea/transferit.iml
+.idea/workspace.xml
