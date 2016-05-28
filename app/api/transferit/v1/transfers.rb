@@ -17,7 +17,6 @@ module Transferit
             model.time.strftime('%H:%M')
           end
           expose :user_id
-          expose :transfer_type
         end
 
       end
@@ -33,17 +32,14 @@ module Transferit
           requires :from, type: Integer, default: 1, desc: 'City id'
           requires :to, type: Integer, default: 2, desc: 'City id'
           optional :date, type: String, default: Time.now.to_date, desc: 'Transfers date'
-          optional :type, type: Symbol, default: :post, values: [:post, :necessary], desc: 'Transfers type'
         end
 
         post do
-          transfers = Transfer.where(transfer_type: Transfer.transfer_types[ params[:type] ],
-                                     from: params[:from],
+          transfers = Transfer.where(from: params[:from],
                                      to: params[:to],
                                      date: params[:date])
 
           present transfers, with: Transferit::V1::Entities::Transfers, root: 'transfers'
-
         end
 
       end
