@@ -54,6 +54,12 @@ module Transferit
 
           comment.save
 
+          if comment.try(:target).try(:comments).present?
+            all_user_stars = comment.target.comments.map {|comment| comment.star}
+            average_user_stars = all_user_stars.reduce(:+).to_f / all_user_stars.size
+            comment.target.update(star:  average_user_stars.round)
+          end
+
           {comment_id: comment.id}
         end
 
