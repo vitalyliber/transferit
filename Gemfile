@@ -46,3 +46,6 @@ group :development do
 end
 
 gem 'rails_admin'
+gem 'grape', '~> 0.16'
+gem 'grape-swagger', '= 0.11.0'
+gem 'grape-swagger-rails'
