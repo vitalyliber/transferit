@@ -19,7 +19,7 @@ module Transferit
           expose :to_id
           expose :date
           expose :time do |model|
-            model.time.strftime('%H:%M')
+            model.time.try(:strftime, '%H:%M')
           end
           expose :user_id
         end
@@ -71,7 +71,7 @@ module Transferit
           requires :to, type: Integer, default: 2, desc: 'City id'
           requires :user, type: Integer, default: 1, desc: 'User id'
           requires :description, type: String, default: 'Hello...', desc: 'Comment for parcel'
-          requires :date, type: String, default: Time.now.to_date, desc: 'Transfers date'
+          requires :date, type: String, default: Time.now.to_date, desc: 'Parcel date'
         end
         post 'create_parcel' do
           parcel = Parcel.new(
@@ -89,14 +89,50 @@ module Transferit
           {parcel_id: parcel.id}
         end
 
+        desc 'Create Transfer'
+        params do
+          requires :from, type: Integer, default: 1, desc: 'City id'
+          requires :to, type: Integer, default: 2, desc: 'City id'
+          requires :user, type: Integer, default: 1, desc: 'User id'
+          requires :description, type: String, default: 'Hello...', desc: 'Comment for transfer'
+          requires :date, type: String, default: Time.now.to_date, desc: 'Transfers date'
+          requires :time, type: String, default: '11:05', desc: 'Transfers date'
+        end
+        post 'create_transfer' do
+          transfer = Transfer.new(
+              from: City.find(params[:from]),
+              to: City.find(params[:to]),
+              user: User.find(params[:user]),
+              description: params[:description],
+              date: params[:date],
+              time: params[:time]
+          )
+
+          error!('Invalid Transfer', 400) unless transfer.valid?
+
+          transfer.save
+
+          {transfer_id: transfer.id}
+        end
+
         desc 'Find Parcel'
         params do
-          requires :parcel_id, type: Integer, default: 1, desc: 'City id'
+          requires :parcel_id, type: Integer, default: 1, desc: 'Parcel id'
         end
         post 'find_parcel' do
-          parcel = Parcel.find_by(1)
+          parcel = Parcel.find_by(id: params[:parcel_id])
 
           present parcel, with: Transferit::V1::Entities::Parcels
+        end
+
+        desc 'Find Transfer'
+        params do
+          requires :transfer_id, type: Integer, default: 1, desc: 'Transfer id'
+        end
+        post 'find_transfer' do
+          transfer = Transfer.find_by(id: params[:transfer_id])
+
+          present transfer, with: Transferit::V1::Entities::Transfers
         end
 
       end
