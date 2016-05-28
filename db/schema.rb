@@ -22,9 +22,9 @@ ActiveRecord::Schema.define(version: 20160528162209) do
   create_table "mobile_users", force: :cascade do |t|
     t.string   "first_name"
     t.string   "last_name"
-    t.integer  "phone"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.integer  "phone",      limit: 8
+    t.datetime "created_at",           null: false
+    t.datetime "updated_at",           null: false
   end
 
   create_table "parcels", force: :cascade do |t|
