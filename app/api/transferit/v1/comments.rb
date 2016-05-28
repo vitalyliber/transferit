@@ -17,9 +17,13 @@ module Transferit
         desc 'Get comments for user'
         params do
           requires :target_id, type: Integer, desc: 'Comments for users'
+          optional :page, type: Integer, default: 1, desc: 'Current page'
+          optional :per, type: Integer, default: 10, desc: 'Quantity elements on page'
         end
         get do
           comments = Comment.where(target_id: params[:target_id])
+
+          comments = comments.page(params[:page]).per(params[:per])
 
           present comments, with: Transferit::V1::Entities::Comments
         end

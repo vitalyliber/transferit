@@ -244,6 +244,7 @@ DEPENDENCIES
   grape-swagger-rails
   jbuilder (~> 2.0)
   jquery-rails
+  kaminari
   pg
   puma
   rails (= 4.2.6)

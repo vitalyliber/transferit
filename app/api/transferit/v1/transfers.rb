@@ -31,6 +31,8 @@ module Transferit
           requires :from, type: Integer, default: 1, desc: 'City id'
           requires :to, type: Integer, default: 2, desc: 'City id'
           optional :date, type: String, default: '', desc: 'Transfers date (example: 2016-05-29)'
+          optional :page, type: Integer, default: 1, desc: 'Current page'
+          optional :per, type: Integer, default: 10, desc: 'Quantity elements on page'
         end
 
         get do
@@ -38,6 +40,8 @@ module Transferit
                                      to: params[:to])
 
           transfers = transfers.where(date: params[:date]) if params[:date].present?
+
+          transfers = transfers.page(params[:page]).per(params[:per])
 
           present transfers, with: Transferit::V1::Entities::Transfers
         end
@@ -47,6 +51,8 @@ module Transferit
           requires :from, type: Integer, default: 1, desc: 'City id'
           requires :to, type: Integer, default: 2, desc: 'City id'
           optional :date, type: String, default: '', desc: 'Transfers date (example: 2016-05-29)'
+          optional :page, type: Integer, default: 1, desc: 'Current page'
+          optional :per, type: Integer, default: 10, desc: 'Quantity elements on page'
         end
 
         get 'parcels' do
@@ -54,6 +60,8 @@ module Transferit
                                      to: params[:to])
 
           parcels = parcels.where(date: params[:date]) if params[:date].present?
+
+          parcels = parcels.page(params[:page]).per(params[:per])
 
           present parcels, with: Transferit::V1::Entities::Parcels
         end
