@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160528094038) do
+ActiveRecord::Schema.define(version: 20160528101108) do
 
   create_table "cities", force: :cascade do |t|
     t.string   "title"
@@ -21,8 +21,8 @@ ActiveRecord::Schema.define(version: 20160528094038) do
 
   create_table "transfers", force: :cascade do |t|
     t.text     "description"
-    t.string   "from"
-    t.string   "to"
+    t.integer  "from_id"
+    t.integer  "to_id"
     t.date     "date"
     t.time     "time"
     t.integer  "user_id"

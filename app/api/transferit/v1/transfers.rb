@@ -10,8 +10,8 @@ module Transferit
 
         expose :transfer do
           expose :description
-          expose :from
-          expose :to
+          expose :from_id
+          expose :to_id
           expose :date
           expose :time do |model|
             model.time.strftime('%H:%M')
@@ -30,8 +30,8 @@ module Transferit
 
         desc 'Get Transfers'
         params do
-          requires :from, type: String, default: 'Moscow', desc: 'Transfers from'
-          requires :to, type: String, default: 'Novosibirsk', desc: 'Transfers to'
+          requires :from, type: Integer, default: 1, desc: 'Transfers from'
+          requires :to, type: Integer, default: 2, desc: 'Transfers to'
           optional :date, type: String, default: Time.now.to_date, desc: 'Transfers date'
           optional :type, type: Symbol, default: :post, values: [:post, :necessary], desc: 'Transfers type'
         end
