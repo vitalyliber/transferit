@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160528101108) do
+ActiveRecord::Schema.define(version: 20160528110735) do
 
   create_table "cities", force: :cascade do |t|
     t.string   "title"
@@ -21,14 +21,14 @@ ActiveRecord::Schema.define(version: 20160528101108) do
 
   create_table "transfers", force: :cascade do |t|
     t.text     "description"
-    t.integer  "from_id"
-    t.integer  "to_id"
     t.date     "date"
     t.time     "time"
     t.integer  "user_id"
     t.integer  "transfer_type", default: 0
     t.datetime "created_at",                null: false
     t.datetime "updated_at",                null: false
+    t.integer  "from_id",       default: 0
+    t.integer  "to_id",         default: 0
   end
 
 end
