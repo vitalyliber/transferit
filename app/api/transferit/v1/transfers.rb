@@ -10,7 +10,7 @@ module Transferit
           requires :from, type: String, default: 'Moscow', desc: 'Transfers from'
           requires :to, type: String, default: 'Novosibirsk', desc: 'Transfers to'
           optional :date, type: String, default: Time.now.to_date, desc: 'Transfers date'
-          optional :type, type: Symbol, default: :send, values: [:send, :find], desc: 'Transfers type'
+          optional :type, type: Symbol, default: :send, values: [:send, :necessary], desc: 'Transfers type'
         end
 
         post do
