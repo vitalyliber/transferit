@@ -52,3 +52,4 @@ gem 'grape-swagger', '= 0.11.0'
 gem 'grape-swagger-rails'
 gem 'grape-entity', '~> 0.4.8'
 gem 'rails_12factor', group: :production
+gem 'puma'
