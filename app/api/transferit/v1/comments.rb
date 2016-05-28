@@ -7,6 +7,10 @@ module Transferit
         expose :author_id
         expose :star
       end
+
+      class Pages < Grape::Entity
+        expose :total_count
+      end
     end
 
     class Comments < Grape::API
@@ -25,7 +29,10 @@ module Transferit
 
           comments = comments.page(params[:page]).per(params[:per])
 
-          present comments, with: Transferit::V1::Entities::Comments
+          pages = [{total_count: comments.total_count}]
+
+          present comments, with: Transferit::V1::Entities::Comments, root: 'comments'
+          present pages, with: Transferit::V1::Entities::Pages, root: 'pages'
         end
 
         desc 'Create comment for user'

@@ -19,6 +19,10 @@ module Transferit
         end
         expose :user_id
       end
+
+      class Pages < Grape::Entity
+        expose :total_count
+      end
     end
 
     class Transfers < Grape::API
@@ -43,7 +47,10 @@ module Transferit
 
           transfers = transfers.page(params[:page]).per(params[:per])
 
-          present transfers, with: Transferit::V1::Entities::Transfers
+          pages = [{total_count: transfers.total_count}]
+
+          present transfers, with: Transferit::V1::Entities::Transfers, root: 'transfers'
+          present pages, with: Transferit::V1::Entities::Pages, root: 'pages'
         end
 
         desc 'Get Parcels'
@@ -63,7 +70,10 @@ module Transferit
 
           parcels = parcels.page(params[:page]).per(params[:per])
 
-          present parcels, with: Transferit::V1::Entities::Parcels
+          pages = [{total_count: parcels.total_count}]
+
+          present parcels, with: Transferit::V1::Entities::Parcels, root: 'parcels'
+          present pages, with: Transferit::V1::Entities::Pages, root: 'pages'
         end
 
         desc 'Create Parcel'
