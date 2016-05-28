@@ -54,3 +54,4 @@ gem 'grape-entity', '~> 0.4.8'
 gem 'rails_12factor', group: :production
 gem 'puma'
 gem 'devise'
+gem 'seed-fu'
