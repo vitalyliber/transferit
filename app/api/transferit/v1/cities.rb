@@ -43,7 +43,7 @@ module Transferit
 
           city = City.find_by("title LIKE ?", "%#{title}%")
 
-          {city_id: city.try(:id), title: city.try(:title)}
+          {id: city.try(:id), title: city.try(:title)}
         end
 
         desc 'Get city title by city_id'
