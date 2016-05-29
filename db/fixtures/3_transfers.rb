@@ -11,9 +11,10 @@
 @id = 1
 1.upto(50) do
   MobileUser.all.each do |user|
-
+      @date = "2016-05-#{rand(29..31)}"
+      @date_arrival = @date.to_datetime + 1.day
       Transfer.seed(:id,
-        {id: @id += 1, description: @description.sample, date: "2016-05-#{rand(29..31)}", time: "0#{rand(1..9)}:#{rand(1..5)}0", user_id: user.id, from_id: rand(1..10), to_id: rand(1..10)}
+        {id: @id += 1, description: @description.sample, date: @date, time: "0#{rand(1..9)}:#{rand(1..5)}0", user_id: user.id, from_id: rand(1..10), to_id: rand(1..10), date_arrival: @date_arrival, time_arrival: "0#{rand(1..9)}:#{rand(1..5)}0"}
       )
 
   end
