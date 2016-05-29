@@ -126,8 +126,8 @@ module Transferit
           requires :description, type: String, default: 'Hello...', desc: 'Comment for transfer'
           requires :date, type: String, default: Time.now.to_date, desc: 'Transfers date'
           requires :time, type: String, default: '11:05', desc: 'Transfers date'
-          requires :date_arrival, type: String, default: Time.now.to_date + 1.day, desc: 'Transfers date'
-          requires :time_arrival, type: String, default: '12:10', desc: 'Transfers date'
+          optional :date_arrival, type: String, default: Time.now.to_date + 1.day, desc: 'Transfers date'
+          optional :time_arrival, type: String, default: '12:10', desc: 'Transfers date'
         end
         post 'create_transfer' do
           transfer = Transfer.new(
