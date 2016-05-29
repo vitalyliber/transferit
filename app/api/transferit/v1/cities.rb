@@ -34,6 +34,18 @@ module Transferit
           present pages, with: Transferit::V1::Entities::Pages, root: 'pages'
         end
 
+        desc 'Get city_id'
+        params do
+          requires :title, type: String, desc: 'City title'
+        end
+        get do
+          title = params[:title].strip.mb_chars.capitalize.to_s
+
+          city = City.find_by("title LIKE ?", "%#{title}%")
+
+          {city_id: city.try(:id)}
+        end
+
         desc 'Get city title by city_id'
         params do
           requires :city_id, type: Integer, desc: 'City'
