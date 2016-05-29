@@ -31,6 +31,10 @@ module Transferit
         expose :time do |model|
           model.time.try(:strftime, '%H:%M')
         end
+        expose :date_arrival
+        expose :time_arrival do |model|
+          model.time_arrival.try(:strftime, '%H:%M')
+        end
         expose :user, using: Transferit::V1::Entities::Users
       end
 

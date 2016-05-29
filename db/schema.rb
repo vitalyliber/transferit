@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160529011053) do
+ActiveRecord::Schema.define(version: 20160529045145) do
 
   create_table "cities", force: :cascade do |t|
     t.string   "title"
@@ -56,10 +56,12 @@ ActiveRecord::Schema.define(version: 20160529011053) do
     t.date     "date"
     t.time     "time"
     t.integer  "user_id"
-    t.datetime "created_at",              null: false
-    t.datetime "updated_at",              null: false
-    t.integer  "from_id",     default: 0
-    t.integer  "to_id",       default: 0
+    t.datetime "created_at",               null: false
+    t.datetime "updated_at",               null: false
+    t.integer  "from_id",      default: 0
+    t.integer  "to_id",        default: 0
+    t.date     "date_arrival"
+    t.time     "time_arrival"
   end
 
   create_table "users", force: :cascade do |t|
