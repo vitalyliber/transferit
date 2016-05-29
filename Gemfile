@@ -56,3 +56,4 @@ gem 'puma'
 gem 'devise'
 gem 'seed-fu'
 gem 'kaminari'
+gem "paperclip", "~> 5.0.0.beta1"
