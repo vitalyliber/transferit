@@ -18,7 +18,7 @@ module Transferit
 
         desc 'Get cities for user'
         params do
-          requires :title, type: String, desc: 'Search by cities'
+          requires :title, type: String, desc: 'City title'
           optional :page, type: Integer, default: 1, desc: 'Current page'
           optional :per, type: Integer, default: 10, desc: 'Quantity elements on page'
         end
@@ -32,6 +32,16 @@ module Transferit
 
           present cities, with: Transferit::V1::Entities::Cities, root: 'сities'
           present pages, with: Transferit::V1::Entities::Pages, root: 'pages'
+        end
+
+        desc 'Get city title by city_id'
+        params do
+          requires :city_id, type: Integer, desc: 'City'
+        end
+        get 'title' do
+          city = City.find_by_id(params[:city_id])
+
+          {title: city.try(:title)}
         end
 
       end
