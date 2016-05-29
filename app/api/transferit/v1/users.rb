@@ -49,6 +49,18 @@ module Transferit
           present user, with: Transferit::V1::Entities::Users
         end
 
+        desc "Update user avatar"
+        params do
+          requires :user_id, :type => Integer, :desc => "User id"
+          requires :avatar, :type => Rack::Multipart::UploadedFile, :desc => "User avatar"
+        end
+        post 'avatar' do
+          avatar_file = File.open(params[:avatar].tempfile.path)
+          user = MobileUser.find_by_id(params[:user_id])
+          user.avatar = avatar_file
+          user.save
+        end
+
       end
 
     end
