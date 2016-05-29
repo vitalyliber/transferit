@@ -1,6 +1,20 @@
 module Transferit
   module V1
     module Entities
+      class Users < Grape::Entity
+        expose :id
+        expose :star
+        expose :first_name
+        expose :last_name
+        expose :phone
+        expose :avatar
+      end
+
+      class Cities < Grape::Entity
+        expose :title
+        expose :id
+      end
+
       class Parcels < Grape::Entity
         expose :description
         expose :from_id
@@ -11,13 +25,13 @@ module Transferit
 
       class Transfers < Grape::Entity
         expose :description
-        expose :from_id
-        expose :to_id
+        expose :from, using: Transferit::V1::Entities::Cities
+        expose :to, using: Transferit::V1::Entities::Cities
         expose :date
         expose :time do |model|
           model.time.try(:strftime, '%H:%M')
         end
-        expose :user_id
+        expose :user, using: Transferit::V1::Entities::Users
       end
 
       class Pages < Grape::Entity
