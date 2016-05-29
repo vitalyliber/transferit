@@ -126,6 +126,8 @@ module Transferit
           requires :description, type: String, default: 'Hello...', desc: 'Comment for transfer'
           requires :date, type: String, default: Time.now.to_date, desc: 'Transfers date'
           requires :time, type: String, default: '11:05', desc: 'Transfers date'
+          requires :date_arrival, type: String, default: Time.now.to_date + 1.day, desc: 'Transfers date'
+          requires :time_arrival, type: String, default: '12:10', desc: 'Transfers date'
         end
         post 'create_transfer' do
           transfer = Transfer.new(
@@ -134,7 +136,9 @@ module Transferit
               user: MobileUser.find_by_id(params[:user]),
               description: params[:description],
               date: params[:date],
-              time: params[:time]
+              time: params[:time],
+              date_arrival: params[:date_arrival],
+              time_arrival: params[:time_arrival]
           )
 
           error!('Invalid Transfer', 400) unless transfer.valid?
