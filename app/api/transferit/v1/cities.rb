@@ -25,7 +25,7 @@ module Transferit
         post do
           title = params[:title].strip.mb_chars.capitalize.to_s
 
-          cities = City.where("title LIKE ?", "%#{title}%")
+          cities = City.where("title LIKE ?", "%#{title}%").order(title: :asc)
 
           cities = cities.page(params[:page]).per(params[:per])
           pages = [{total_count: cities.total_count}]
