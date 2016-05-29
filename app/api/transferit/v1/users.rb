@@ -1,5 +1,14 @@
 module Transferit
   module V1
+    module Entities
+      class Users < Grape::Entity
+        expose :id
+        expose :star
+        expose :first_name
+        expose :last_name
+        expose :phone
+      end
+    end
     class Users < Grape::API
       format :json
 
@@ -28,6 +37,16 @@ module Transferit
           user.update(first_name: params[:first_name], last_name: params[:last_name])
 
           {user_id: user.id, first_name: user.first_name, last_name: user.last_name}
+        end
+
+        desc 'Info about user'
+        params do
+          requires :user_id, type: Integer, desc: 'User id'
+        end
+        post 'info' do
+          user = MobileUser.find_by_id(params[:user_id])
+
+          present user, with: Transferit::V1::Entities::Users
         end
 
       end
