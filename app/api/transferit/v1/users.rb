@@ -7,6 +7,7 @@ module Transferit
         expose :first_name
         expose :last_name
         expose :phone
+        expose :avatar
       end
     end
     class Users < Grape::API
