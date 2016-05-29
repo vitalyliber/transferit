@@ -120,20 +120,20 @@ module Transferit
 
         desc 'Create Transfer'
         params do
-          requires :from, type: Integer, default: 1, desc: 'City id'
-          requires :to, type: Integer, default: 2, desc: 'City id'
-          requires :user, type: Integer, default: 1, desc: 'User id'
-          requires :description, type: String, default: 'Hello...', desc: 'Comment for transfer'
-          requires :date, type: String, default: Time.now.to_date, desc: 'Transfers date'
-          requires :time, type: String, default: '11:05', desc: 'Transfers date'
+          optional :from, type: Integer, default: 1, desc: 'City id'
+          optional :to, type: Integer, default: 2, desc: 'City id'
+          optional :user, type: Integer, default: 1, desc: 'User id'
+          optional :description, type: String, default: 'Hello...', desc: 'Comment for transfer'
+          optional :date, type: String, default: Time.now.to_date, desc: 'Transfers date'
+          optional :time, type: String, default: '11:05', desc: 'Transfers date'
           optional :date_arrival, type: String, default: Time.now.to_date + 1.day, desc: 'Transfers date'
           optional :time_arrival, type: String, default: '12:10', desc: 'Transfers date'
         end
         post 'create_transfer' do
           transfer = Transfer.new(
-              from: City.find_by_id(params[:from]),
-              to: City.find_by_id(params[:to]),
-              user: MobileUser.find_by_id(params[:user]),
+              from_id: params[:from],
+              to_id: params[:to],
+              user_id: params[:user],
               description: params[:description],
               date: params[:date],
               time: params[:time],
@@ -141,7 +141,7 @@ module Transferit
               time_arrival: params[:time_arrival]
           )
 
-          error!('Invalid Transfer', 400) unless transfer.valid?
+          # error!('Invalid Transfer', 400) unless transfer.valid?
 
           transfer.save
 
